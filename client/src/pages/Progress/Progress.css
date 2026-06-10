@@ -1,0 +1,125 @@
+.progress-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.progress-layout {
+  display: flex;
+  padding-top: var(--navbar-height);
+}
+
+.progress-main {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.progress-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.progress-latest {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.latest-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.latest-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.latest-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.latest-value span {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.progress-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.progress-table-wrap {
+  overflow-x: auto;
+}
+
+.progress-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.progress-table th {
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.progress-table td {
+  padding: 12px 16px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.progress-table tr:last-child td {
+  border-bottom: none;
+}
+
+.progress-delete-btn {
+  background: none;
+  color: var(--accent-peach);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
+}
+
+.progress-delete-btn:hover {
+  background-color: var(--accent-peach-light);
+}
+
+@media (max-width: 768px) {
+  .progress-main { padding: 20px 16px; }
+  .progress-form-grid { grid-template-columns: 1fr 1fr; }
+  .latest-grid { grid-template-columns: 1fr 1fr; }
+  .progress-charts { grid-template-columns: 1fr; }
+}

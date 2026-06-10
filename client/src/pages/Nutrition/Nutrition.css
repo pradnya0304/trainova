@@ -1,0 +1,140 @@
+.nutrition-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.nutrition-layout {
+  display: flex;
+  padding-top: var(--navbar-height);
+}
+
+.nutrition-main {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.nutrition-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.nutrition-form-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.meal-form-section {
+  border-top: 1px solid var(--border-light);
+  padding-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.meal-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-form-header h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.meal-form-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.nutrition-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.nutrition-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.nutrition-targets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.target-item {
+  text-align: center;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-secondary);
+}
+
+.target-item.protein { background-color: var(--accent-blue-light); }
+.target-item.carbs { background-color: var(--accent-yellow-light); }
+.target-item.fat { background-color: var(--accent-peach-light); }
+
+.target-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.target-item.protein .target-value { color: var(--accent-blue); }
+.target-item.carbs .target-value { color: var(--accent-yellow); }
+.target-item.fat .target-value { color: var(--accent-peach); }
+
+.target-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.nutrition-diet-badge {
+  margin-top: 8px;
+}
+
+.meals-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .nutrition-overview { grid-template-columns: 1fr; }
+  .meals-grid { grid-template-columns: repeat(2, 1fr); }
+  .nutrition-form-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .nutrition-main { padding: 20px 16px; }
+  .meals-grid { grid-template-columns: 1fr; }
+  .nutrition-targets { grid-template-columns: repeat(2, 1fr); }
+  .meal-form-row { grid-template-columns: 1fr 1fr; }
+  .nutrition-form-grid { grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,25 @@
+.progress-chart {
+  width: 100%;
+}
+
+.chart-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border);
+}
+
+.chart-empty p {
+  font-size: 14px;
+  color: var(--text-muted);
+}

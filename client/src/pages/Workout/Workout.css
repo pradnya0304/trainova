@@ -1,0 +1,119 @@
+.workout-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.workout-layout {
+  display: flex;
+  padding-top: var(--navbar-height);
+}
+
+.workout-main {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.workout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.workout-form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.workout-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.exercise-form-section {
+  border-top: 1px solid var(--border-light);
+  padding-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exercise-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exercise-form-header h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.exercise-form-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.remove-exercise-btn {
+  background-color: var(--accent-peach-light);
+  color: var(--accent-peach);
+  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workout-content {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.workout-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.workout-empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .workout-content {
+    grid-template-columns: 1fr;
+  }
+
+  .workout-timer-section {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .workout-main { padding: 20px 16px; }
+  .workout-form-grid { grid-template-columns: 1fr 1fr; }
+  .workout-cards-grid { grid-template-columns: 1fr; }
+  .exercise-form-row { flex-direction: column; }
+}

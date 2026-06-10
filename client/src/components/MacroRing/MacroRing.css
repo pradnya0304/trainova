@@ -1,0 +1,65 @@
+.macro-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.macro-ring-chart {
+  position: relative;
+  width: 100%;
+}
+
+.macro-ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.macro-total-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.macro-total-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.macro-ring-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.macro-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.macro-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.macro-legend-name {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.macro-legend-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
