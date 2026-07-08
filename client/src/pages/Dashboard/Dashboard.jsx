@@ -114,7 +114,7 @@ const Dashboard = () => {
               <Link to="/exercises" className="quick-link-card ql-purple">Exercise Library</Link>
               <Link to="/progress" className="quick-link-card ql-peach">Log Progress</Link>
               <Link to="/recovery" className="quick-link-card ql-green">Recovery</Link>
-              <Link to="/aicoach" className="quick-link-card ql-blue">AI Coach</Link>
+             
             </div>
           </div>
 

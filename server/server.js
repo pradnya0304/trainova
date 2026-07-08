@@ -21,6 +21,7 @@ app.use('/api/progress', require('./routes/progress.routes'))
 app.use('/api/community', require('./routes/community.routes'))
 app.use('/api/supplement', require('./routes/supplement.routes'))
 
+
 app.use(errorHandler)
 
 app.get('/', (req, res) => {

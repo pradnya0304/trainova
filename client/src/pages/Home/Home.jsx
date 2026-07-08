@@ -9,7 +9,6 @@ const features = [
   { title: 'Exercise Library', desc: 'Browse hundreds of exercises filtered by muscle, equipment and difficulty.', color: 'purple', path: '/exercises' },
   { title: 'Nutrition Planner', desc: 'Personalised meal plans with macro targets based on your goals.', color: 'yellow', path: '/nutrition' },
   { title: 'Progress Tracker', desc: 'Log your weight and measurements and visualise your progress over time.', color: 'peach', path: '/progress' },
-  { title: 'AI Coach', desc: 'Chat with your personal AI coach that knows your full fitness profile.', color: 'green', path: '/aicoach' },
   { title: 'Recovery Guide', desc: 'Sleep, deload weeks, stretching and injury prevention tips.', color: 'blue', path: '/recovery' },
   { title: 'Supplements', desc: 'Evidence based supplement guide with dosing and timing information.', color: 'purple', path: '/supplements' }
 ]

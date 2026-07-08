@@ -22,6 +22,10 @@ const AuthProvider = ({ children }) => {
   const login = (userData, token) => {
     localStorage.setItem('trainova-token', token)
     setUser(userData)
+    // fetch fresh full profile after login
+    api.get('/auth/me')
+      .then(res => setUser(res.data))
+      .catch(err => console.log(err))
   }
 
   const logout = () => {
@@ -29,8 +33,17 @@ const AuthProvider = ({ children }) => {
     setUser(null)
   }
 
+  const refreshUser = async () => {
+    try {
+      const res = await api.get('/auth/me')
+      setUser(res.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   )

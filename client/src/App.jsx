@@ -15,7 +15,7 @@ import Progress from './pages/Progress/Progress'
 import Recovery from './pages/Recovery/Recovery'
 import Supplements from './pages/Supplements/Supplements'
 import Community from './pages/Community/Community'
-import AICoach from './pages/AICoach/AICoach'
+
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
         <Route path="/recovery" element={<ProtectedRoute><Recovery /></ProtectedRoute>} />
         <Route path="/supplements" element={<ProtectedRoute><Supplements /></ProtectedRoute>} />
         <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
-        <Route path="/aicoach" element={<ProtectedRoute><AICoach /></ProtectedRoute>} />
+       
       </Routes>
     </BrowserRouter>
   )

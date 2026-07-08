@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import useAuth from '../../hooks/useAuth'
+import api from '../../services/api'
 import './AICoach.css'
 
 const suggestions = [
@@ -32,35 +33,32 @@ const AICoach = () => {
     const userMessage = text || input
     if (!userMessage.trim()) return
 
-    setMessages(prev => [...prev, { role: 'user', text: userMessage }])
+    const newMessages = [...messages, { role: 'user', text: userMessage }]
+    setMessages(newMessages)
     setInput('')
     setLoading(true)
 
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: buildContext(),
-          messages: [
-            ...messages.filter(m => m.role !== 'assistant' || messages.indexOf(m) !== 0).map(m => ({
-              role: m.role === 'user' ? 'user' : 'assistant',
-              content: m.text
-            })),
-            { role: 'user', content: userMessage }
-          ]
-        })
+      const chatHistory = newMessages
+        .filter((m, i) => !(i === 0 && m.role === 'assistant'))
+        .map(m => ({
+          role: m.role === 'user' ? 'user' : 'assistant',
+          content: m.text
+        }))
+
+      const res = await api.post('/ai/chat', {
+        systemPrompt: buildContext(),
+        messages: chatHistory
       })
-      const data = await res.json()
-      const reply = data.content?.[0]?.text || 'Sorry, I could not get a response right now.'
-      setMessages(prev => [...prev, { role: 'assistant', text: reply }])
-    } catch (err) {
-      setMessages(prev => [...prev, { role: 'assistant', text: 'Connection error. Please try again.' }])
-    } finally {
-      setLoading(false)
-    }
+
+      setMessages(prev => [...prev, { role: 'assistant', text: res.data.reply }])
+
+  } catch (err) {
+  const errorMsg = err.response?.data?.message || 'Sorry I could not get a response right now. Please try again.'
+  setMessages(prev => [...prev, { role: 'assistant', text: errorMsg }])
+} finally {
+  setLoading(false)
+}
   }
 
   return (
@@ -104,10 +102,14 @@ const AICoach = () => {
                   placeholder="Ask your coach anything..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                  onKeyDown={(e) => e.key === 'Enter' && !loading && sendMessage()}
                 />
-                <button className="btn-primary chat-send-btn" onClick={() => sendMessage()} disabled={loading}>
-                  Send
+                <button
+                  className="btn-primary chat-send-btn"
+                  onClick={() => sendMessage()}
+                  disabled={loading}
+                >
+                  {loading ? <span className="spinner" style={{ width: '16px', height: '16px' }}></span> : 'Send'}
                 </button>
               </div>
             </div>
@@ -123,7 +125,7 @@ const AICoach = () => {
                 <h4 className="suggestions-title">Suggested Questions</h4>
                 <div className="suggestions-list">
                   {suggestions.map((s, i) => (
-                    <button key={i} className="suggestion-btn" onClick={() => sendMessage(s)}>
+                    <button key={i} className="suggestion-btn" onClick={() => !loading && sendMessage(s)}>
                       {s}
                     </button>
                   ))}

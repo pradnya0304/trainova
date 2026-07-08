@@ -8,7 +8,7 @@ import api from '../../services/api'
 import './Profile.css'
 
 const Profile = () => {
-  const { user, login } = useAuth()
+  const { user, login, refreshUser } = useAuth()
   const [form, setForm] = useState({
     name: '', age: '', height: '', weight: '',
     gender: '', bodyType: '', goal: '', activityLevel: ''
@@ -42,8 +42,8 @@ const Profile = () => {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await api.put('/user/profile', form)
-      login(res.data, localStorage.getItem('trainova-token'))
+      await api.put('/user/profile', form)
+      await refreshUser()
       toast.success('Profile updated!')
     } catch (err) {
       toast.error('Failed to update profile')

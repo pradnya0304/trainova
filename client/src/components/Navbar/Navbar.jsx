@@ -24,7 +24,6 @@ const Navbar = () => {
     { label: 'Workout', path: '/workout' },
     { label: 'Nutrition', path: '/nutrition' },
     { label: 'Progress', path: '/progress' },
-    { label: 'AI Coach', path: '/aicoach' },
     { label: 'BMI & Stats', path: '/bmi' },
     { label: 'Exercises', path: '/exercises' },
     { label: 'Recovery', path: '/recovery' },

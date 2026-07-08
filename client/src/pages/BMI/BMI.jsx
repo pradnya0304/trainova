@@ -1,16 +1,55 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import { calculateBMI, getBMICategory, getBMIColor } from '../../utils/bmiCalculator'
 import { calculateBMR, calculateTDEE } from '../../utils/tdeeCalculator'
 import { calculateMacros } from '../../utils/macroCalculator'
+import useAuth from '../../hooks/useAuth'
 import './BMI.css'
 
 const BMI = () => {
+  const { user } = useAuth()
   const [form, setForm] = useState({
-    weight: '', height: '', age: '', gender: 'male', activityLevel: 'moderate', goal: 'muscle_gain'
+    weight: '',
+    height: '',
+    age: '',
+    gender: 'male',
+    activityLevel: 'moderate',
+    goal: 'muscle_gain'
   })
   const [results, setResults] = useState(null)
+
+  useEffect(() => {
+    if (user) {
+      const prefilled = {
+        weight: user.weight || '',
+        height: user.height || '',
+        age: user.age || '',
+        gender: user.gender || 'male',
+        activityLevel: user.activityLevel || 'moderate',
+        goal: user.goal || 'muscle_gain'
+      }
+      setForm(prefilled)
+
+      if (user.weight && user.height && user.age) {
+        const weight = parseFloat(user.weight)
+        const height = parseFloat(user.height)
+        const age = parseInt(user.age)
+        const gender = user.gender || 'male'
+        const activityLevel = user.activityLevel || 'moderate'
+        const goal = user.goal || 'muscle_gain'
+
+        const bmi = calculateBMI(weight, height)
+        const category = getBMICategory(bmi)
+        const color = getBMIColor(bmi)
+        const bmr = calculateBMR(weight, height, age, gender)
+        const tdee = calculateTDEE(bmr, activityLevel)
+        const macros = calculateMacros(tdee, goal)
+
+        setResults({ bmi, category, color, bmr, tdee, macros })
+      }
+    }
+  }, [user])
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -41,12 +80,12 @@ const BMI = () => {
 
           <div className="animate-fade-in">
             <h1 className="section-title">BMI and Body Stats</h1>
-            <p className="section-subtitle">Calculate your BMI, BMR, TDEE and recommended macros</p>
+            <p className="section-subtitle">Your stats are pre-filled from your profile. You can adjust and recalculate anytime.</p>
           </div>
 
           <div className="bmi-content">
             <div className="card bmi-form-card animate-fade-in">
-              <h3 className="card-section-title">Enter Your Details</h3>
+              <h3 className="card-section-title">Your Details</h3>
               <form onSubmit={handleCalculate}>
                 <div className="bmi-form-grid">
                   <div className="form-group">

@@ -29,6 +29,14 @@ const register = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      age: user.age,
+      height: user.height,
+      weight: user.weight,
+      gender: user.gender,
+      bodyType: user.bodyType,
+      goal: user.goal,
+      activityLevel: user.activityLevel,
+      avatar: user.avatar,
       token: generateToken(user._id)
     })
 
@@ -56,6 +64,14 @@ const login = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      age: user.age,
+      height: user.height,
+      weight: user.weight,
+      gender: user.gender,
+      bodyType: user.bodyType,
+      goal: user.goal,
+      activityLevel: user.activityLevel,
+      avatar: user.avatar,
       token: generateToken(user._id)
     })
 

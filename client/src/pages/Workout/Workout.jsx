@@ -2,21 +2,120 @@ import { useState, useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import WorkoutCard from '../../components/WorkoutCard/WorkoutCard'
-import TimerWidget from '../../components/TimerWidget/TimerWidget'
 import toast from 'react-hot-toast'
 import workoutService from '../../services/workoutService'
+import api from '../../services/api'
 import './Workout.css'
 
-const emptyExercise = { name: '', sets: 3, reps: 10, weight: 0, muscleGroup: '' }
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const goals = ['muscle_gain', 'fat_loss', 'recomp', 'endurance', 'mobility']
+const emptyExercise = { name: '', sets: 3, reps: 10, weight: 0, muscleGroup: '', custom: false }
+
+const WorkoutTimer = () => {
+  const [minutes, setMinutes] = useState(1)
+  const [seconds, setSeconds] = useState(30)
+  const [totalSeconds, setTotalSeconds] = useState(90)
+  const [timeLeft, setTimeLeft] = useState(90)
+  const [running, setRunning] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [inputMin, setInputMin] = useState(1)
+  const [inputSec, setInputSec] = useState(30)
+
+  useEffect(() => {
+    let interval = null
+    if (running && timeLeft > 0) {
+      interval = setInterval(() => setTimeLeft(t => t - 1), 1000)
+    } else if (timeLeft === 0) {
+      setRunning(false)
+    }
+    return () => clearInterval(interval)
+  }, [running, timeLeft])
+
+  const handleSetTimer = () => {
+    const total = inputMin * 60 + parseInt(inputSec)
+    setTotalSeconds(total)
+    setTimeLeft(total)
+    setRunning(false)
+    setEditing(false)
+  }
+
+  const mins = Math.floor(timeLeft / 60)
+  const secs = timeLeft % 60
+  const progress = totalSeconds > 0 ? (timeLeft / totalSeconds) * 100 : 0
+
+  return (
+    <div className="card timer-card">
+      <h3 className="card-section-title">Rest Timer</h3>
+
+      {editing ? (
+        <div className="timer-edit">
+          <div className="timer-edit-inputs">
+            <div className="form-group">
+              <label>Minutes</label>
+              <input type="number" min="0" max="10" value={inputMin} onChange={e => setInputMin(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Seconds</label>
+              <input type="number" min="0" max="59" value={inputSec} onChange={e => setInputSec(e.target.value)} />
+            </div>
+          </div>
+          <button className="btn-primary" style={{ width: '100%', marginTop: '8px' }} onClick={handleSetTimer}>Set Timer</button>
+          <button className="btn-secondary" style={{ width: '100%', marginTop: '8px' }} onClick={() => setEditing(false)}>Cancel</button>
+        </div>
+      ) : (
+        <div className="timer-widget">
+          <div className="timer-ring">
+            <svg viewBox="0 0 100 100" className="timer-svg">
+              <circle cx="50" cy="50" r="42" className="timer-track" />
+              <circle
+                cx="50" cy="50" r="42"
+                className="timer-progress"
+                strokeDasharray={`${2 * Math.PI * 42}`}
+                strokeDashoffset={`${2 * Math.PI * 42 * (1 - progress / 100)}`}
+              />
+            </svg>
+            <div className="timer-display">
+              <span className="timer-time">
+                {String(mins).padStart(2, '0')}:{String(secs).padStart(2, '0')}
+              </span>
+              <span className="timer-label">rest</span>
+            </div>
+          </div>
+
+          <div className="timer-controls">
+            <button className="timer-btn" onClick={() => setRunning(p => !p)}>
+              {running ? '⏸' : '▶'}
+            </button>
+            <button className="timer-btn reset" onClick={() => { setRunning(false); setTimeLeft(totalSeconds) }}>
+              ↺
+            </button>
+          </div>
+
+          <button className="timer-edit-btn" onClick={() => setEditing(true)}>
+            Set custom time
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
 
 const Workout = () => {
   const [workouts, setWorkouts] = useState([])
+  const [exercises, setExercises] = useState([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ name: '', goal: '', day: '', duration: '', exercises: [{ ...emptyExercise }] })
+  const [form, setForm] = useState({
+    name: '',
+    goal: '',
+    day: '',
+    duration: '',
+    exercises: [{ ...emptyExercise }]
+  })
 
   useEffect(() => {
     fetchWorkouts()
+    api.get('/exercise').then(res => setExercises(res.data)).catch(err => console.log(err))
   }, [])
 
   const fetchWorkouts = async () => {
@@ -37,6 +136,17 @@ const Workout = () => {
   const handleExerciseChange = (index, field, value) => {
     const updated = [...form.exercises]
     updated[index][field] = value
+    if (field === 'name' && !updated[index].custom) {
+      const found = exercises.find(e => e.name === value)
+      if (found) updated[index].muscleGroup = found.muscleGroup
+    }
+    setForm({ ...form, exercises: updated })
+  }
+
+  const toggleCustomExercise = (index) => {
+    const updated = [...form.exercises]
+    updated[index].custom = !updated[index].custom
+    updated[index].name = ''
     setForm({ ...form, exercises: updated })
   }
 
@@ -102,15 +212,19 @@ const Workout = () => {
                     <label>Goal</label>
                     <select name="goal" value={form.goal} onChange={handleChange}>
                       <option value="">Select goal</option>
-                      <option value="muscle_gain">Muscle Gain</option>
-                      <option value="fat_loss">Fat Loss</option>
-                      <option value="recomp">Recomposition</option>
-                      <option value="endurance">Endurance</option>
+                      {goals.map(g => (
+                        <option key={g} value={g}>{g.replace('_', ' ')}</option>
+                      ))}
                     </select>
                   </div>
                   <div className="form-group">
                     <label>Day</label>
-                    <input name="day" value={form.day} onChange={handleChange} placeholder="e.g. Monday" />
+                    <select name="day" value={form.day} onChange={handleChange}>
+                      <option value="">Select day</option>
+                      {days.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
                   </div>
                   <div className="form-group">
                     <label>Duration (min)</label>
@@ -128,26 +242,49 @@ const Workout = () => {
 
                   {form.exercises.map((ex, i) => (
                     <div key={i} className="exercise-form-row">
-                      <div className="form-group" style={{ flex: 2 }}>
-                        <label>Exercise Name</label>
-                        <input value={ex.name} onChange={(e) => handleExerciseChange(i, 'name', e.target.value)} placeholder="e.g. Bench Press" required />
+                      <div className="exercise-name-group">
+                        <label>Exercise</label>
+                        {ex.custom ? (
+                          <input
+                            value={ex.name}
+                            onChange={(e) => handleExerciseChange(i, 'name', e.target.value)}
+                            placeholder="Type exercise name"
+                            required
+                          />
+                        ) : (
+                          <select
+                            value={ex.name}
+                            onChange={(e) => handleExerciseChange(i, 'name', e.target.value)}
+                            required
+                          >
+                            <option value="">Select exercise</option>
+                            {exercises.map(e => (
+                              <option key={e._id} value={e.name}>{e.name} ({e.muscleGroup})</option>
+                            ))}
+                          </select>
+                        )}
+                        <button
+                          type="button"
+                          className="custom-toggle-btn"
+                          onClick={() => toggleCustomExercise(i)}
+                        >
+                          {ex.custom ? 'Pick from list' : 'Type manually'}
+                        </button>
                       </div>
-                      <div className="form-group" style={{ flex: 1 }}>
-                        <label>Muscle Group</label>
-                        <input value={ex.muscleGroup} onChange={(e) => handleExerciseChange(i, 'muscleGroup', e.target.value)} placeholder="chest" />
-                      </div>
-                      <div className="form-group" style={{ flex: 0.5 }}>
+
+                      <div className="form-group" style={{ flex: '0 0 80px' }}>
                         <label>Sets</label>
                         <input type="number" value={ex.sets} onChange={(e) => handleExerciseChange(i, 'sets', e.target.value)} />
                       </div>
-                      <div className="form-group" style={{ flex: 0.5 }}>
+                      <div className="form-group" style={{ flex: '0 0 80px' }}>
                         <label>Reps</label>
                         <input type="number" value={ex.reps} onChange={(e) => handleExerciseChange(i, 'reps', e.target.value)} />
                       </div>
-                      <div className="form-group" style={{ flex: 0.5 }}>
+                      <div className="form-group" style={{ flex: '0 0 100px' }}>
                         <label>Weight (kg)</label>
                         <input type="number" value={ex.weight} onChange={(e) => handleExerciseChange(i, 'weight', e.target.value)} />
                       </div>
+
                       {form.exercises.length > 1 && (
                         <button type="button" className="remove-exercise-btn" onClick={() => removeExercise(i)}>x</button>
                       )}
@@ -178,10 +315,7 @@ const Workout = () => {
             </div>
 
             <div className="workout-timer-section">
-              <div className="card">
-                <h3 className="card-section-title">Rest Timer</h3>
-                <TimerWidget defaultSeconds={90} />
-              </div>
+              <WorkoutTimer />
             </div>
           </div>
 

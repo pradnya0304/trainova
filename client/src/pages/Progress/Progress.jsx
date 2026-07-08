@@ -12,12 +12,13 @@ const Progress = () => {
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState({
     date: new Date().toISOString().split('T')[0],
-    weight: '', bodyFat: '', chest: '', waist: '', hips: '', arms: '', legs: '', notes: ''
+    weight: '',
+    notes: ''
   })
 
   useEffect(() => {
     progressService.getProgress()
-      .then(data => setEntries(data.slice(0, 20).reverse()))
+      .then(data => setEntries(data.slice(0, 30).reverse()))
       .catch(err => console.log(err))
       .finally(() => setLoading(false))
   }, [])
@@ -30,10 +31,14 @@ const Progress = () => {
     e.preventDefault()
     try {
       const data = await progressService.addProgress(form)
-      setEntries([...entries, data])
+      setEntries(prev => [...prev, data])
       setShowForm(false)
       toast.success('Progress logged!')
-      setForm({ date: new Date().toISOString().split('T')[0], weight: '', bodyFat: '', chest: '', waist: '', hips: '', arms: '', legs: '', notes: '' })
+      setForm({
+        date: new Date().toISOString().split('T')[0],
+        weight: '',
+        notes: ''
+      })
     } catch (err) {
       toast.error('Could not save entry')
     }
@@ -50,6 +55,10 @@ const Progress = () => {
   }
 
   const latest = entries[entries.length - 1]
+  const first = entries[0]
+  const weightChange = latest && first && latest._id !== first._id
+    ? (latest.weight - first.weight).toFixed(1)
+    : null
 
   return (
     <div className="progress-page">
@@ -61,10 +70,10 @@ const Progress = () => {
           <div className="progress-header animate-fade-in">
             <div>
               <h1 className="section-title">Progress Tracker</h1>
-              <p className="section-subtitle">Log your measurements and track your transformation</p>
+              <p className="section-subtitle">Log your weight and track your transformation over time</p>
             </div>
             <button className="btn-primary" onClick={() => setShowForm(!showForm)}>
-              {showForm ? 'Cancel' : '+ Log Progress'}
+              {showForm ? 'Cancel' : '+ Log Today'}
             </button>
           </div>
 
@@ -79,35 +88,11 @@ const Progress = () => {
                   </div>
                   <div className="form-group">
                     <label>Weight (kg)</label>
-                    <input name="weight" type="number" step="0.1" value={form.weight} onChange={handleChange} placeholder="70.5" />
-                  </div>
-                  <div className="form-group">
-                    <label>Body Fat (%)</label>
-                    <input name="bodyFat" type="number" step="0.1" value={form.bodyFat} onChange={handleChange} placeholder="18" />
-                  </div>
-                  <div className="form-group">
-                    <label>Chest (cm)</label>
-                    <input name="chest" type="number" value={form.chest} onChange={handleChange} placeholder="95" />
-                  </div>
-                  <div className="form-group">
-                    <label>Waist (cm)</label>
-                    <input name="waist" type="number" value={form.waist} onChange={handleChange} placeholder="80" />
-                  </div>
-                  <div className="form-group">
-                    <label>Hips (cm)</label>
-                    <input name="hips" type="number" value={form.hips} onChange={handleChange} placeholder="95" />
-                  </div>
-                  <div className="form-group">
-                    <label>Arms (cm)</label>
-                    <input name="arms" type="number" value={form.arms} onChange={handleChange} placeholder="36" />
-                  </div>
-                  <div className="form-group">
-                    <label>Legs (cm)</label>
-                    <input name="legs" type="number" value={form.legs} onChange={handleChange} placeholder="55" />
+                    <input name="weight" type="number" step="0.1" value={form.weight} onChange={handleChange} placeholder="70.5" required />
                   </div>
                   <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                    <label>Notes</label>
-                    <input name="notes" value={form.notes} onChange={handleChange} placeholder="How are you feeling?" />
+                    <label>Notes (optional)</label>
+                    <input name="notes" value={form.notes} onChange={handleChange} placeholder="How are you feeling today?" />
                   </div>
                 </div>
                 <button type="submit" className="btn-primary">Save Entry</button>
@@ -116,36 +101,30 @@ const Progress = () => {
           )}
 
           {latest && (
-            <div className="progress-latest animate-fade-in">
-              <h3 className="card-section-title" style={{ marginBottom: '16px' }}>Latest Measurements</h3>
-              <div className="latest-grid">
-                <div className="latest-card card">
-                  <p className="latest-label">Weight</p>
-                  <p className="latest-value">{latest.weight || '--'} <span>kg</span></p>
-                </div>
-                <div className="latest-card card">
-                  <p className="latest-label">Body Fat</p>
-                  <p className="latest-value">{latest.bodyFat || '--'} <span>%</span></p>
-                </div>
-                <div className="latest-card card">
-                  <p className="latest-label">Waist</p>
-                  <p className="latest-value">{latest.waist || '--'} <span>cm</span></p>
-                </div>
-                <div className="latest-card card">
-                  <p className="latest-label">Arms</p>
-                  <p className="latest-value">{latest.arms || '--'} <span>cm</span></p>
-                </div>
+            <div className="progress-stats animate-fade-in">
+              <div className="card progress-stat-card">
+                <p className="stat-label">Current Weight</p>
+                <p className="stat-value">{latest.weight} <span>kg</span></p>
+              </div>
+              <div className="card progress-stat-card">
+                <p className="stat-label">Total Entries</p>
+                <p className="stat-value">{entries.length}</p>
+              </div>
+              <div className="card progress-stat-card">
+                <p className="stat-label">Weight Change</p>
+                <p className="stat-value" style={{ color: weightChange > 0 ? 'var(--accent-peach)' : 'var(--accent-green)' }}>
+                  {weightChange !== null ? (weightChange > 0 ? '+' : '') + weightChange : '--'} <span>kg</span>
+                </p>
+              </div>
+              <div className="card progress-stat-card">
+                <p className="stat-label">Last Logged</p>
+                <p className="stat-value" style={{ fontSize: '16px' }}>{new Date(latest.date).toLocaleDateString()}</p>
               </div>
             </div>
           )}
 
-          <div className="progress-charts animate-fade-in">
-            <div className="card">
-              <ProgressChart data={entries} dataKey="weight" label="Weight over time (kg)" color="var(--accent-green)" />
-            </div>
-            <div className="card">
-              <ProgressChart data={entries} dataKey="bodyFat" label="Body fat over time (%)" color="var(--accent-peach)" />
-            </div>
+          <div className="card animate-fade-in">
+            <ProgressChart data={entries} dataKey="weight" label="Weight over time (kg)" color="var(--accent-green)" />
           </div>
 
           {loading ? (
@@ -159,9 +138,6 @@ const Progress = () => {
                     <tr>
                       <th>Date</th>
                       <th>Weight</th>
-                      <th>Body Fat</th>
-                      <th>Waist</th>
-                      <th>Arms</th>
                       <th>Notes</th>
                       <th></th>
                     </tr>
@@ -171,9 +147,6 @@ const Progress = () => {
                       <tr key={entry._id}>
                         <td>{new Date(entry.date).toLocaleDateString()}</td>
                         <td>{entry.weight ? entry.weight + ' kg' : '--'}</td>
-                        <td>{entry.bodyFat ? entry.bodyFat + ' %' : '--'}</td>
-                        <td>{entry.waist ? entry.waist + ' cm' : '--'}</td>
-                        <td>{entry.arms ? entry.arms + ' cm' : '--'}</td>
                         <td>{entry.notes || '--'}</td>
                         <td>
                           <button className="progress-delete-btn" onClick={() => handleDelete(entry._id)}>Delete</button>
