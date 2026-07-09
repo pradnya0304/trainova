@@ -27,51 +27,288 @@
 
 .progress-form-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin-bottom: 20px;
 }
 
-.progress-latest {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 24px;
-}
-
-.latest-grid {
+.progress-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
-.latest-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+.progress-stat-card {
+  padding: 20px;
 }
 
-.latest-value {
-  font-size: 26px;
+/* TABS */
+.progress-tabs {
+  display: flex;
+  gap: 4px;
+  background-color: var(--bg-secondary);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  width: fit-content;
+}
+
+.progress-tab {
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.progress-tab:hover {
+  color: var(--text-primary);
+}
+
+.progress-tab.active {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+/* TIMELINE GOAL CARD */
+.timeline-goal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timeline-goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-journey-bar {
+  padding: 20px 0;
+}
+
+.journey-points {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.journey-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.journey-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.start-dot {
+  background-color: var(--accent-blue);
+}
+
+.goal-dot {
+  background-color: var(--accent-purple);
+  border: 2px dashed var(--accent-purple);
+  background-color: transparent;
+}
+
+.journey-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.journey-weight {
+  font-size: 16px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.latest-value span {
-  font-size: 14px;
-  font-weight: 400;
+.journey-date {
+  font-size: 11px;
   color: var(--text-muted);
 }
 
-.progress-charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.journey-line-wrap {
+  flex: 1;
+  position: relative;
+  height: 8px;
+  margin: 0 12px;
+}
+
+.journey-line-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+}
+
+.journey-line-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  background-color: var(--accent-green);
+  border-radius: var(--radius-full);
+  transition: width 1s ease;
+}
+
+.journey-current-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.current-marker-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  border: 3px solid var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.current-marker-label {
+  position: absolute;
+  top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.timeline-goal-message {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 12px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-style: italic;
+}
+
+/* TIMELINE ENTRIES */
+.timeline-section {
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.timeline-entry {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.timeline-entry-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 20px;
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.dot-latest {
+  background-color: var(--accent-green);
+  box-shadow: 0 0 0 4px var(--accent-green-light);
+}
+
+.dot-first {
+  background-color: var(--accent-blue);
+}
+
+.dot-normal {
+  background-color: var(--border);
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  background-color: var(--border-light);
+  min-height: 24px;
+  margin-top: 4px;
+}
+
+.timeline-entry-content {
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.timeline-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.timeline-entry-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.timeline-entry-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.timeline-entry-weight {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.timeline-entry-diff {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.timeline-entry-notes {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  font-style: italic;
+}
+
+/* TABLE */
 .progress-table-wrap {
   overflow-x: auto;
 }
@@ -111,6 +348,8 @@
   padding: 4px 8px;
   border-radius: var(--radius-sm);
   transition: background-color 0.2s ease;
+  cursor: pointer;
+  border: none;
 }
 
 .progress-delete-btn:hover {
@@ -119,7 +358,12 @@
 
 @media (max-width: 768px) {
   .progress-main { padding: 20px 16px; }
-  .progress-form-grid { grid-template-columns: 1fr 1fr; }
-  .latest-grid { grid-template-columns: 1fr 1fr; }
-  .progress-charts { grid-template-columns: 1fr; }
+  .progress-form-grid { grid-template-columns: 1fr; }
+  .progress-stats { grid-template-columns: 1fr 1fr; }
+  .progress-tabs { width: 100%; }
+  .progress-tab { flex: 1; text-align: center; font-size: 13px; padding: 8px 10px; }
+  .journey-points { flex-direction: column; gap: 16px; }
+  .journey-line-wrap { width: 8px; height: 60px; margin: 0; }
+  .journey-line-bg { width: 8px; height: 100%; }
+  .journey-line-fill { width: 8px; height: 100%; }
 }

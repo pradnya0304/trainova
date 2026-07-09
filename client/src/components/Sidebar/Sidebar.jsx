@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import {
   FiGrid, FiActivity, FiBook,
   FiPieChart, FiTrendingUp, FiHeart,
-  FiPackage, FiList
+  FiPackage, FiZap, FiAward, FiList, FiSearch
 } from 'react-icons/fi'
 import './Sidebar.css'
 
@@ -17,6 +17,9 @@ const Sidebar = () => {
     { label: 'Nutrition', path: '/nutrition', icon: <FiPieChart size={18} /> },
     { label: 'Progress', path: '/progress', icon: <FiTrendingUp size={18} /> },
     { label: 'Recovery', path: '/recovery', icon: <FiHeart size={18} /> },
+    { label: 'Split Generator', path: '/split', icon: <FiZap size={18} /> },
+    { label: 'Streak Tracker', path: '/streak', icon: <FiAward size={18} /> },
+    { label: 'Calorie Tracker', path: '/calories', icon: <FiSearch size={18} /> },
     { label: 'Supplements', path: '/supplements', icon: <FiPackage size={18} /> }
   ]
 

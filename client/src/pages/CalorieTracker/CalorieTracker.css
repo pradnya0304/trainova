@@ -1,0 +1,351 @@
+.calorie-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.calorie-layout {
+  display: flex;
+  padding-top: var(--navbar-height);
+}
+
+.calorie-main {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.calorie-input-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calorie-input-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.calorie-input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.calorie-input {
+  flex: 1;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.calorie-input:focus {
+  outline: none;
+  border-color: var(--accent-green);
+}
+
+.calorie-search-btn {
+  padding: 14px 28px;
+  font-size: 15px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.calorie-error {
+  font-size: 13px;
+  color: var(--accent-peach);
+  font-weight: 500;
+}
+
+.calorie-totals {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.calorie-total-card {
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.calorie-total-card.highlight {
+  background-color: var(--accent-green-light);
+  border-color: var(--accent-green);
+}
+
+.calorie-total-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  margin: 8px 0 4px;
+}
+
+.calorie-total-card.highlight .calorie-total-value {
+  color: var(--accent-green);
+}
+
+.calorie-total-value.protein { color: var(--accent-blue); }
+.calorie-total-value.carbs { color: var(--accent-yellow); }
+.calorie-total-value.fat { color: var(--accent-peach); }
+
+.calorie-total-unit {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.calorie-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calorie-clear-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--accent-peach);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
+}
+
+.calorie-clear-btn:hover {
+  background-color: var(--accent-peach-light);
+}
+
+.calorie-food-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.calorie-food-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.calorie-food-item:last-child {
+  border-bottom: none;
+}
+
+.calorie-food-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.calorie-food-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.calorie-food-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: capitalize;
+  margin-bottom: 2px;
+}
+
+.calorie-food-quantity {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.calorie-food-macros {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.calorie-macro-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.protein-pill {
+  background-color: var(--accent-blue-light);
+  color: var(--accent-blue);
+}
+
+.carbs-pill {
+  background-color: var(--accent-yellow-light);
+  color: var(--accent-yellow);
+}
+
+.fat-pill {
+  background-color: var(--accent-peach-light);
+  color: var(--accent-peach);
+}
+
+.calorie-food-kcal {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 70px;
+  text-align: right;
+}
+
+.calorie-remove-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.calorie-remove-btn:hover {
+  background-color: var(--accent-peach-light);
+  color: var(--accent-peach);
+}
+
+.calorie-macro-bar-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.macro-bar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.macro-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.macro-bar-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.macro-bar-track {
+  flex: 1;
+  height: 10px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.macro-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+}
+
+.protein-fill { background-color: var(--accent-blue); }
+.carbs-fill { background-color: var(--accent-yellow); }
+.fat-fill { background-color: var(--accent-peach); }
+
+.macro-bar-pct {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.calorie-empty {
+  padding: 48px;
+}
+
+.calorie-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.calorie-empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.calorie-empty-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 440px;
+  line-height: 1.6;
+}
+
+.calorie-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.calorie-example-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calorie-example-btn:hover {
+  background-color: var(--accent-green-light);
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+}
+
+@media (max-width: 768px) {
+  .calorie-main { padding: 20px 16px; }
+  .calorie-totals { grid-template-columns: 1fr 1fr; }
+  .calorie-input-row { flex-direction: column; }
+  .calorie-search-btn { width: 100%; }
+  .calorie-food-macros { gap: 6px; }
+}

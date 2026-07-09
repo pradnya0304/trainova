@@ -20,7 +20,7 @@ app.use('/api/nutrition', require('./routes/nutrition.routes'))
 app.use('/api/progress', require('./routes/progress.routes'))
 app.use('/api/community', require('./routes/community.routes'))
 app.use('/api/supplement', require('./routes/supplement.routes'))
-
+app.use('/api/calories', require('./routes/calories.routes'))
 
 app.use(errorHandler)
 

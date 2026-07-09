@@ -15,6 +15,9 @@ import Progress from './pages/Progress/Progress'
 import Recovery from './pages/Recovery/Recovery'
 import Supplements from './pages/Supplements/Supplements'
 import Community from './pages/Community/Community'
+import WorkoutSplit from './pages/WorkoutSplit/WorkoutSplit'
+ import StreakTracker from './pages/StreakTracker/StreakTracker'
+ import CalorieTracker from './pages/CalorieTracker/CalorieTracker'
 
 
 const App = () => {
@@ -43,7 +46,9 @@ const App = () => {
         <Route path="/recovery" element={<ProtectedRoute><Recovery /></ProtectedRoute>} />
         <Route path="/supplements" element={<ProtectedRoute><Supplements /></ProtectedRoute>} />
         <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
-       
+        <Route path="/split" element={<ProtectedRoute><WorkoutSplit /></ProtectedRoute>} />
+        <Route path="/calories" element={<ProtectedRoute><CalorieTracker /></ProtectedRoute>} />
+        <Route path="/streak" element={<ProtectedRoute><StreakTracker /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )
