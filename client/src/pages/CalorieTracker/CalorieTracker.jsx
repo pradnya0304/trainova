@@ -25,10 +25,10 @@ const CalorieTracker = () => {
       const foods = res.data
 
       if (!foods || foods.length === 0) {
-        setError('Could not find that food. Try a simpler name like "banana" or "chicken".')
-        setLoading(false)
-        return
-      }
+  setError('Food not found. Try being more specific. Examples: "banana 150g", "chicken breast 200g", "2 eggs".')
+  setLoading(false)
+  return
+}
 
       setMeals(prev => [...prev, ...foods])
       setInput('')
@@ -61,7 +61,9 @@ const CalorieTracker = () => {
 
           <div className="card calorie-input-card animate-fade-in">
             <h3 className="card-section-title">What did you eat?</h3>
-            <p className="calorie-input-hint">Examples: "banana", "chicken breast", "oats", "brown rice"</p>
+            <p className="calorie-input-hint">
+  You can specify portions too. Examples: "banana 150g", "chicken breast 200g", "2 eggs", "oats 80g", "milk tea 250ml"
+</p>
             <div className="calorie-input-row">
               <input
                 className="calorie-input"
