@@ -18,6 +18,7 @@ import Community from './pages/Community/Community'
 import WorkoutSplit from './pages/WorkoutSplit/WorkoutSplit'
  import StreakTracker from './pages/StreakTracker/StreakTracker'
  import CalorieTracker from './pages/CalorieTracker/CalorieTracker'
+ import PlatePlanner from './pages/PlatePlanner/PlatePlanner'
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/split" element={<ProtectedRoute><WorkoutSplit /></ProtectedRoute>} />
         <Route path="/calories" element={<ProtectedRoute><CalorieTracker /></ProtectedRoute>} />
         <Route path="/streak" element={<ProtectedRoute><StreakTracker /></ProtectedRoute>} />
+        <Route path="/plate" element={<ProtectedRoute><PlatePlanner /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )
