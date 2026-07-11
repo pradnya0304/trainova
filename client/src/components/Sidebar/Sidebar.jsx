@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import {
   FiGrid, FiActivity, FiBook,
   FiPieChart, FiTrendingUp, FiHeart,
-  FiPackage, FiZap, FiAward, FiList, FiSearch,FiCircle
+  FiPackage, FiZap, FiAward, FiList, FiSearch
 } from 'react-icons/fi'
 import './Sidebar.css'
 
@@ -20,8 +20,7 @@ const Sidebar = () => {
     { label: 'Split Generator', path: '/split', icon: <FiZap size={18} /> },
     { label: 'Streak Tracker', path: '/streak', icon: <FiAward size={18} /> },
     { label: 'Calorie Tracker', path: '/calories', icon: <FiSearch size={18} /> },
-    { label: 'Supplements', path: '/supplements', icon: <FiPackage size={18} /> },
-    { label: 'Plate Builder', path: '/plate', icon: <FiCircle size={18} /> }
+    { label: 'Supplements', path: '/supplements', icon: <FiPackage size={18} /> }
   ]
 
   const isActive = (path) => location.pathname === path
