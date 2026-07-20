@@ -6,7 +6,7 @@ Trainova is a full-stack MERN web application that serves as a complete personal
 
 ## Live Demo
 
-Frontend: https://trainova.vercel.app  
+Frontend: https://trainova-fitness.vercel.app  
 Backend: https://trainova-server.onrender.com
 
 ---
@@ -141,3 +141,22 @@ Backend: https://trainova-server.onrender.com
 ---
 
 ## Project Structure
+trainova/
+├── client/ React frontend
+│ ├── src/
+│ │ ├── pages/ One folder per page with JSX and CSS
+│ │ ├── components/ Shared reusable components
+│ │ ├── context/ Auth and Theme context providers
+│ │ ├── hooks/ Custom React hooks
+│ │ ├── services/ Axios API service functions
+│ │ ├── utils/ BMI, TDEE and macro calculators
+│ │ └── styles/ Global CSS and theme variables
+│ └── package.json
+│
+└── server/ Node Express backend
+├── config/ Database connection
+├── controllers/ Route handler logic
+├── middleware/ Auth and error middleware
+├── models/ Mongoose schemas
+├── routes/ Express route definitions
+└── utils/ Seed scripts and helper functions
