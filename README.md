@@ -160,3 +160,38 @@ trainova/
 ├── models/ Mongoose schemas
 ├── routes/ Express route definitions
 └── utils/ Seed scripts and helper functions
+
+---
+
+## Getting Started Locally
+
+**Prerequisites**
+- Node.js installed
+- MongoDB running locally or a MongoDB Atlas connection string
+
+**Clone the repository**
+
+git clone https://github.com/YOUR_USERNAME/trainova.git
+cd trainova
+
+
+**Setup the backend**
+
+cd server
+npm install
+Create a `.env` file inside the server folder:
+
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/trainova
+JWT_SECRET=your_jwt_secret
+
+
+Run the backend:
+
+npm run dev
+
+
+Seed the database:
+
+node utils/seedExercises.js
+node utils/seedSupplements.js
