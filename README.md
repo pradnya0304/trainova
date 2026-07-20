@@ -195,3 +195,70 @@ Seed the database:
 
 node utils/seedExercises.js
 node utils/seedSupplements.js
+
+**Setup the frontend**
+
+cd client
+npm install
+
+
+Create a `.env` file inside the client folder:
+
+VITE_API_URL=http://localhost:5000/api
+
+
+Run the frontend:
+
+npm run dev
+
+Open `http://localhost:5173` in your browser.
+
+---
+
+## Environment Variables
+
+**Server**
+
+| Variable | Description |
+|---|---|
+| PORT | Port for Express server |
+| MONGO_URI | MongoDB connection string |
+| JWT_SECRET | Secret key for JWT signing |
+
+**Client**
+
+| Variable | Description |
+|---|---|
+| VITE_API_URL | Backend API base URL |
+
+---
+
+## API Routes
+
+| Method | Route | Description | Auth |
+|---|---|---|---|
+| POST | /api/auth/register | Register new user | No |
+| POST | /api/auth/login | Login user | No |
+| GET | /api/auth/me | Get logged in user | Yes |
+| GET | /api/user/profile | Get user profile | Yes |
+| PUT | /api/user/profile | Update user profile | Yes |
+| GET | /api/workout | Get all workouts | Yes |
+| POST | /api/workout | Create workout | Yes |
+| PUT | /api/workout/:id | Update workout | Yes |
+| DELETE | /api/workout/:id | Delete workout | Yes |
+| GET | /api/exercise | Get all exercises | Yes |
+| GET | /api/exercise/:id | Get single exercise | Yes |
+| GET | /api/nutrition | Get nutrition plan | Yes |
+| POST | /api/nutrition | Save nutrition plan | Yes |
+| GET | /api/progress | Get progress entries | Yes |
+| POST | /api/progress | Add progress entry | Yes |
+| DELETE | /api/progress/:id | Delete progress entry | Yes |
+| GET | /api/supplement | Get all supplements | Yes |
+| POST | /api/calories/search | Search food calories | Yes |
+
+---
+
+## Developer
+
+Pradnya 
+GitHub: https://github.com/pradnya0304
